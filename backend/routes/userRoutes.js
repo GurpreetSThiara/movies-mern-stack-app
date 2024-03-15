@@ -1,6 +1,6 @@
 
 import express from 'express';
-import { createUser,loginUser ,logoutUser,getAllUsers,getUserProfile } from '../controllers/userController.js';
+import { createUser,loginUser ,logoutUser,getAllUsers,getUserProfile,updateUserProfile } from '../controllers/userController.js';
 import { authenticate, authorizedAdmin } from '../middlewares/authMiddleware.js';
 
 
@@ -12,6 +12,6 @@ router.post("/auth", loginUser);
 
 router.post("/logout",logoutUser);
 
-router.route('/profile').get(authenticate,getUserProfile)
+router.route('/profile').get(authenticate,getUserProfile).put(authenticate, updateUserProfile)
 
 export default router;
