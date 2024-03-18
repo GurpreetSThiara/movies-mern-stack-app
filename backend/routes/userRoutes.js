@@ -4,6 +4,7 @@ import { createUser,loginUser ,logoutUser,getAllUsers,getUserProfile,updateUserP
 import { authenticate, authorizedAdmin } from '../middlewares/authMiddleware.js';
 
 
+console.log("user Routes called")
 const router = express.Router();
 
 router.route("/").post(createUser).get(authenticate,authorizedAdmin,getAllUsers);

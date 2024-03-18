@@ -1,19 +1,29 @@
 import asyncHandler from "../middlewares/asyncHandler.js";
 import User from "../model/User.js";
 import generateToken from "../utils/createToken.js";
+import bcrypt from "bcryptjs";
 
 const createUser = asyncHandler(async (req, res) => {
+  console.log("create user called")
+  console.log(req.body)
   const { username, email, password } = req.body;
   if (!username || !email || !password) {
+    console.log('empty credentials')
     throw new Error("Please fill all the feilds");
   }
+  console.log("create user called")
+
 
   const userExist = await User.findOne({ email });
   if (userExist) res.status(400).send("User already exists");
 
   const salt = await bcrypt.genSalt(10);
+  console.log("create user called")
+
   const hashedPassword = await bcrypt.hash(password, salt);
   const newUser = new User({ username, email, password: hashedPassword });
+  console.log("create user called")
+
   try {
     await newUser.save();
     generateToken(res, newUser._id);
@@ -39,7 +49,7 @@ const loginUser = asyncHandler(async (req, res) => {
       existingUser.password
     );
     if (isPasswordValid) {
-      createToken(res, existingUser._id);
+      generateToken(res, existingUser._id);
 
       res.status(201).json({
         _id: existingUser._id,

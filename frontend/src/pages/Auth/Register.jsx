@@ -9,11 +9,11 @@ const Register = () => {
   const [usernameError, setUserNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [validate, setValidate] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+
   const regex = /^[a-zA-Z][a-zA-Z0-9_]{3,}$/;
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  const passwordRegex = /^.{6,}$/;  const [formData, setFormData] = useState({
+  const passwordRegex = /^.{6,}$/; 
+  const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
@@ -55,8 +55,12 @@ const Register = () => {
     }
     if(!usernameError && !emailError && !passwordError){
       try{
-       const res = await register({...formData}).unwrap()
-       dispatch(setCredentials({...res}))
+        let u = formData.username;
+        let e = formData.email;
+        let p = formData.password;
+        console.log(formData);
+        const res = await register({ u, e, p }).unwrap(); 
+        dispatch(setCredentials({...res}))
        navigate(redirect)
        toast.success('registered successfully')
        
