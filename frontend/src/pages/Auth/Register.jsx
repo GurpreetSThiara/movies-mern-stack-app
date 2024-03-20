@@ -59,8 +59,11 @@ const Register = () => {
         let e = formData.email;
         let p = formData.password;
         console.log(formData);
-        const res = await register({ u, e, p }).unwrap(); 
+        const res = await register(formData).unwrap(); 
         dispatch(setCredentials({...res}))
+        if(res.jwt){
+          localStorage.setItem('movies_jwt',res.jwt)
+        }
        navigate(redirect)
        toast.success('registered successfully')
        

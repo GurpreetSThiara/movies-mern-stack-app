@@ -26,8 +26,9 @@ const createUser = asyncHandler(async (req, res) => {
 
   try {
     await newUser.save();
-    generateToken(res, newUser._id);
+   let jwt = await   generateToken(res, newUser._id);
     res.status(201).json({
+      jwt,
       _id: newUser._id,
       username: newUser.username,
       email: newUser.email,
@@ -49,9 +50,10 @@ const loginUser = asyncHandler(async (req, res) => {
       existingUser.password
     );
     if (isPasswordValid) {
-      generateToken(res, existingUser._id);
+   let jwt =  await generateToken(res, existingUser._id);
 
       res.status(201).json({
+         jwt,
         _id: existingUser._id,
         username: existingUser.username,
         email: existingUser.email,

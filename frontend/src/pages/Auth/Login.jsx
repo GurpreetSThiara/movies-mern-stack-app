@@ -34,6 +34,10 @@ const Login = () => {
       const res = await login(formData).unwrap();
       dispatch(setCredentials({ ...res }));
       navigate(redirect);
+   
+      if(res.jwt){
+        localStorage.setItem('movies_jwt',res.jwt)
+      }
     }catch(err){
       toast.error(err?.data?.message || err.error);
     }

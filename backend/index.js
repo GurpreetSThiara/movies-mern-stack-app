@@ -24,10 +24,13 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cookieParser());
 
+
 const PORT = 3000;
 
+console.log(process.env.JWT_SECRET)
+
 app.use("/api/v1/users", userRoutes);
-app.use("api/v1/genre",genreRoutes)
+app.use("/api/v1/genre",genreRoutes)
 
 
 app.listen(PORT, () => {});

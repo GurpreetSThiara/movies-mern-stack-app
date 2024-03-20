@@ -5,11 +5,14 @@ import Genre from "../model/Genre.js";
 
 
 const createGenre = asyncHandler(async (req , res) => {
-    try{
+    console.log('create genre called') 
+       try{
         const {name} = req.body;
         if(!name){
             return res.json({"error":"Name is required"});
         }
+        console.log('create genre called') 
+
 
         const existingGenre = await Genre.findOne({ name });
          
@@ -50,8 +53,13 @@ const updateGenre = asyncHandler(async (req,res) =>{
 });
 
 const removeGenre = asyncHandler(async (req , res) => {
+    console.log('remove called')
     try{
+        console.log('remove called')
+
         const {id} = req.params;
+        console.log(id)
+        console.log("id               id")
         const genre = await Genre.findByIdAndDelete(id);
         if(!genre){
             return res.status(404).json({"error":"Genre doesn't exist"})
@@ -68,7 +76,8 @@ const removeGenre = asyncHandler(async (req , res) => {
 
 const listGenres = asyncHandler(async(req,res)=>{
     try{
-        const allgenres = Genre.find({});
+        const allgenres = await Genre.find({}).lean();
+      
         res.json(allgenres);
 
     }catch(e){
