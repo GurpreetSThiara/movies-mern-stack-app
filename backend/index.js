@@ -7,6 +7,7 @@ import express from "express";
 import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import genreRoutes from "./routes/genreRoutes.js";
+import moviesRoutes from "./routes/moviesRoutes.js";
 
 dotenv.config();
 
@@ -31,6 +32,7 @@ console.log(process.env.JWT_SECRET)
 
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/genre",genreRoutes)
+app.use("/api/v1/movies",moviesRoutes)
 
 
 app.listen(PORT, () => {});

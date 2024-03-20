@@ -4,29 +4,28 @@ import generateToken from "../utils/createToken.js";
 import bcrypt from "bcryptjs";
 
 const createUser = asyncHandler(async (req, res) => {
-  console.log("create user called")
-  console.log(req.body)
+  console.log("create user called");
+  console.log(req.body);
   const { username, email, password } = req.body;
   if (!username || !email || !password) {
-    console.log('empty credentials')
+    console.log("empty credentials");
     throw new Error("Please fill all the feilds");
   }
-  console.log("create user called")
-
+  console.log("create user called");
 
   const userExist = await User.findOne({ email });
   if (userExist) res.status(400).send("User already exists");
 
   const salt = await bcrypt.genSalt(10);
-  console.log("create user called")
+  console.log("create user called");
 
   const hashedPassword = await bcrypt.hash(password, salt);
   const newUser = new User({ username, email, password: hashedPassword });
-  console.log("create user called")
+  console.log("create user called");
 
   try {
     await newUser.save();
-   let jwt = await   generateToken(res, newUser._id);
+    let jwt = await generateToken(res, newUser._id);
     res.status(201).json({
       jwt,
       _id: newUser._id,
@@ -50,10 +49,10 @@ const loginUser = asyncHandler(async (req, res) => {
       existingUser.password
     );
     if (isPasswordValid) {
-   let jwt =  await generateToken(res, existingUser._id);
+      let jwt = await generateToken(res, existingUser._id);
 
       res.status(201).json({
-         jwt,
+        jwt,
         _id: existingUser._id,
         username: existingUser.username,
         email: existingUser.email,
@@ -117,6 +116,8 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     throw new Error("User not found");
   }
 });
+
+
 export {
   createUser,
   logoutUser,
@@ -124,4 +125,5 @@ export {
   getAllUsers,
   getUserProfile,
   updateUserProfile,
+  
 };
