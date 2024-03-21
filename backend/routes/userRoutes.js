@@ -1,10 +1,10 @@
 
 import express from 'express';
-import { createUser,loginUser ,logoutUser,getAllUsers,getUserProfile,updateUserProfile } from '../controllers/userController.js';
 import { authenticate, authorizedAdmin } from '../middlewares/authMiddleware.js';
 
+import { createUser,loginUser ,logoutUser,getAllUsers,getUserProfile,updateUserProfile } from '../controllers/userController.js';
 
-console.log("user Routes called")
+
 const router = express.Router();
 
 router.route("/").post(createUser).get(authenticate,authorizedAdmin,getAllUsers);

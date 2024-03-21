@@ -29,7 +29,7 @@ router.delete("/comment/delete", authenticate, authorizedAdmin, deleteComment);
 router.post("movie/:id/reviews", authenticate, checkId, movieReview);
 
 // public routes
-router.get("/movies", getAllMovies);
+router.get("/", getAllMovies);
 router.get("/movie/:id", getSpecificMovie);
 router.get("/movies/new", getNewMovies);
 router.get("/movies/top", getTopMovies);
